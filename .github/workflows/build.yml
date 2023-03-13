@@ -1,0 +1,55 @@
+name: Build and publish
+on: push
+
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        java: [ '8', '17' ]
+    name: Build on Java ${{ matrix.java }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.java }}
+          cache: "maven"
+      - name: Build with Maven
+        run: mvn -B clean verify --no-transfer-progress --show-version
+
+
+  publishing_parameters:
+    needs: build
+    name: Publishing parameters
+    runs-on: ubuntu-latest
+    outputs:
+      is_release: ${{ steps.version.outputs.is_release }}
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - name: Determine version
+        id: version
+        run: |
+          if [[ $GITHUB_REF == *"tags"* ]]; then
+            is_release=true
+            version=${GITHUB_REF#refs/tags/}
+          else
+            is_release=false
+            version=${GITHUB_REF#refs/heads/}-SNAPSHOT
+          fi
+          echo "is_release=${is_release//\//-}" >> $GITHUB_OUTPUT
+          echo "version=${version//\//-}" >> $GITHUB_OUTPUT
+
+
+  publish:
+    needs: publishing_parameters
+    name: Publish ${{ needs.publishing_parameters.outputs.version }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: digipost/action-maven-publish@v1
+        with:
+          sonatype_secrets: ${{ secrets.sonatype_secrets }}
+          release_version: ${{ needs.publishing_parameters.outputs.version }}
+          perform_release: ${{ needs.publishing_parameters.outputs.is_release }}
