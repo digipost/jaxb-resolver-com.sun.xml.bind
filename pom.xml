@@ -53,13 +53,7 @@
         <dependency>
             <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb-impl</artifactId>
-            <version>2.3.8</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>jakarta.xml.bind</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-            </exclusions>
+            <version>2.3.2</version>
         </dependency>
         <dependency>
             <groupId>com.sun.xml.bind</groupId>
@@ -116,6 +110,16 @@
                 <plugin>
                     <artifactId>maven-enforcer-plugin</artifactId>
                     <version>3.2.1</version>
+                    <configuration>
+                        <rules>
+                            <bannedDependencies>
+                                <excludes>
+                                    <exclude>jakarta.*</exclude>
+                                </excludes>
+                                <searchTransitive>true</searchTransitive>
+                            </bannedDependencies>
+                        </rules>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
