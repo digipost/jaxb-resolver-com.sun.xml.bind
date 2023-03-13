@@ -25,11 +25,16 @@
         <version>12</version>
     </parent>
 
-    <artifactId>jaxb-resolver-com.sun.xml.bind</artifactId>
+    <artifactId>jaxb-resolver-com.sun.xml.bind-parent</artifactId>
     <version>LOCAL-SNAPSHOT</version>
-    <name>Digipost JAXB Resolver - com.sun.xml.bind</name>
-    <description>Library to enable com.sun.xml.bind JAXB2 implementation operating alongside the newer Jakarta JAXB versions</description>
+    <packaging>pom</packaging>
+    <name>Digipost JAXB Resolver - com.sun.xml.bind - Parent</name>
     <url>https://github.com/digipost/jaxb-resolver-com.sun.xml.bind</url>
+
+    <modules>
+        <module>bom</module>
+        <module>lib</module>
+    </modules>
 
     <licenses>
         <license>
@@ -39,101 +44,9 @@
         </license>
     </licenses>
 
-    <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-            <version>2.3.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.xml.bind</groupId>
-            <artifactId>jaxb-impl</artifactId>
-            <version>2.3.2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.xml.bind</groupId>
-            <artifactId>jaxb-core</artifactId>
-            <version>2.3.0.1</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>2.0.6</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>no.digipost</groupId>
-            <artifactId>jul-to-slf4j-junit-extension</artifactId>
-            <version>1.0</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.junit</groupId>
-                <artifactId>junit-bom</artifactId>
-                <version>5.9.2</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.mockito</groupId>
-                <artifactId>mockito-bom</artifactId>
-                <version>4.11.0</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <build>
         <pluginManagement>
             <plugins>
-                <plugin>
-                    <artifactId>maven-enforcer-plugin</artifactId>
-                    <version>3.2.1</version>
-                    <configuration>
-                        <rules>
-                            <bannedDependencies>
-                                <excludes>
-                                    <exclude>jakarta.*</exclude>
-                                </excludes>
-                                <searchTransitive>true</searchTransitive>
-                            </bannedDependencies>
-                        </rules>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.11.0</version>
-                    <configuration>
-                        <compilerArgs>
-                            <arg>-Xlint</arg>
-                        </compilerArgs>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.0.0-M9</version>
-                </plugin>
                 <plugin>
                     <artifactId>maven-deploy-plugin</artifactId>
                     <version>3.1.0</version>
@@ -149,18 +62,6 @@
                 <plugin>
                     <artifactId>maven-install-plugin</artifactId>
                     <version>3.1.0</version>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-resources-plugin</artifactId>
-                    <version>3.3.0</version>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>3.5.0</version>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.3.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
