@@ -9,5 +9,10 @@ Licensed under Apache 2 - http://www.apache.org/licenses/LICENSE-2.0.html
 This software includes third party software subject to the following licenses:
 
   Digipost JAXB Resolver - com.sun.xml.bind under The Apache Software License, Version 2.0
+  Jakarta Activation under EDL 1.0
+  JavaBeans Activation Framework API jar under CDDL/GPLv2+CE
+  jaxb-api under CDDL 1.1 or GPL2 w/ CPE
+  Old JAXB Core under CDDL+GPL License
+  Old JAXB Runtime under Eclipse Distribution License - v 1.0
 
 
